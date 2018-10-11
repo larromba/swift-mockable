@@ -1,0 +1,6 @@
+sources:
+  - ./Example
+templates:
+  - ./Templates
+output:
+  ./Output
