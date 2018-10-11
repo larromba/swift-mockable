@@ -1,0 +1,5 @@
+# xcode.gitignore
+
+.DS_Store
+*.xcworkspace/
+xcuserdata/
