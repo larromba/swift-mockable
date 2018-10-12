@@ -159,14 +159,14 @@ You can add annotations to:
 #### protocol definitions
 * **name**: the name to create a mock class from, e.g. `Object` would become `MockObject`
 * **inherits**: the classes the mock should inherit from. if there are more than one, use quotes, e.g. `"NSObject, MyObject"`
-* **init**: adds boiler plate inits to your mock object. 
-	accepted values are:
+* **init**: adds boiler plate inits to your mock object. accepted values:
 	*coder*: e.g. use with `UIViewController` subclass
+
 ```
 	required init?(coder aDecoder: NSCoder) {
      fatalError("init(coder:) has not been implemented")
 	}
- ```
+```
 
 #### protocol variables
 * **value**: the default value to be initilised with, e.g. `NSTextField()`
