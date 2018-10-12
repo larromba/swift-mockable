@@ -36,7 +36,7 @@ final class _Invocation {
   fileprivate func set<T: _StringRawRepresentable>(parameter: Any, forKey key: T) {
     parameters[key.rawValue] = parameter
   }
-  fileprivate func parameter<T: _StringRawRepresentable>(for key: T) -> Any? {
+  func parameter<T: _StringRawRepresentable>(for key: T) -> Any? {
     return parameters[key.rawValue]
   }
 }
