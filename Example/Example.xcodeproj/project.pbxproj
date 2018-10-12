@@ -12,7 +12,7 @@
 		7FC4664E216F8C5100A73817 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FC4664C216F8C5100A73817 /* Main.storyboard */; };
 		7FC46650216F8C5100A73817 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FC4664F216F8C5100A73817 /* Assets.xcassets */; };
 		7FC46653216F8C5100A73817 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FC46651216F8C5100A73817 /* LaunchScreen.storyboard */; };
-		7FC4665E216F8C5200A73817 /* ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4665D216F8C5200A73817 /* ExampleTests.swift */; };
+		7FC4665E216F8C5200A73817 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4665D216F8C5200A73817 /* ViewControllerTests.swift */; };
 		7FC46669216F8CC700A73817 /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC46668216F8CC700A73817 /* Testing.swift */; };
 		7FC4666B216F8CCF00A73817 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4666A216F8CCF00A73817 /* Mockable.swift */; };
 		7FC4666E216F8D7600A73817 /* template.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4666D216F8D7500A73817 /* template.generated.swift */; };
@@ -37,7 +37,7 @@
 		7FC46652216F8C5100A73817 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7FC46654216F8C5100A73817 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FC46659216F8C5200A73817 /* ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FC4665D216F8C5200A73817 /* ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleTests.swift; sourceTree = "<group>"; };
+		7FC4665D216F8C5200A73817 /* ViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
 		7FC4665F216F8C5200A73817 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7FC46668216F8CC700A73817 /* Testing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
 		7FC4666A216F8CCF00A73817 /* Mockable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mockable.swift; sourceTree = "<group>"; };
@@ -98,8 +98,8 @@
 		7FC4665C216F8C5200A73817 /* ExampleTests */ = {
 			isa = PBXGroup;
 			children = (
+				7FC4665D216F8C5200A73817 /* ViewControllerTests.swift */,
 				7FC4666D216F8D7500A73817 /* template.generated.swift */,
-				7FC4665D216F8C5200A73817 /* ExampleTests.swift */,
 				7FC4665F216F8C5200A73817 /* Info.plist */,
 			);
 			path = ExampleTests;
@@ -112,7 +112,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7FC46662216F8C5200A73817 /* Build configuration list for PBXNativeTarget "Example" */;
 			buildPhases = (
-				7FC4666C216F8D6000A73817 /* ShellScript */,
 				7FC46641216F8C5100A73817 /* Sources */,
 				7FC46642216F8C5100A73817 /* Frameworks */,
 				7FC46643216F8C5100A73817 /* Resources */,
@@ -130,6 +129,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7FC46665216F8C5200A73817 /* Build configuration list for PBXNativeTarget "ExampleTests" */;
 			buildPhases = (
+				7FC4666F2170A39E00A73817 /* ShellScript */,
 				7FC46655216F8C5200A73817 /* Sources */,
 				7FC46656216F8C5200A73817 /* Frameworks */,
 				7FC46657216F8C5200A73817 /* Resources */,
@@ -202,7 +202,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7FC4666C216F8D6000A73817 /* ShellScript */ = {
+		7FC4666F2170A39E00A73817 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -234,7 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FC4666E216F8D7600A73817 /* template.generated.swift in Sources */,
-				7FC4665E216F8C5200A73817 /* ExampleTests.swift in Sources */,
+				7FC4665E216F8C5200A73817 /* ViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

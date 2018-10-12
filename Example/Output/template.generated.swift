@@ -18,7 +18,6 @@ import AppKit
 
 
 
-
 // MARK: - Sourcery Helper
 
 protocol _StringRawRepresentable: RawRepresentable {
@@ -34,10 +33,10 @@ final class _Invocation {
     self.name = name
   }
 
-  func set<T: _StringRawRepresentable>(parameter: Any, forKey key: T) {
+  fileprivate func set<T: _StringRawRepresentable>(parameter: Any, forKey key: T) {
     parameters[key.rawValue] = parameter
   }
-  func parameter<T: _StringRawRepresentable>(for key: T) -> Any? {
+  fileprivate func parameter<T: _StringRawRepresentable>(for key: T) -> Any? {
     return parameters[key.rawValue]
   }
 }
@@ -75,11 +74,11 @@ final class _Actions {
 
   // MARK: - defaultReturnValue
 
-  func setDefaultReturnValue<T: _StringRawRepresentable>(_ value: Any, for functionName: T) {
+  fileprivate func setDefaultReturnValue<T: _StringRawRepresentable>(_ value: Any, for functionName: T) {
     let invocation = self.invocation(for: functionName)
     invocation.set(parameter: value, forKey: Keys.defaultReturnValue)
   }
-  func defaultReturnValue<T: _StringRawRepresentable>(for functionName: T) -> Any? {
+  fileprivate func defaultReturnValue<T: _StringRawRepresentable>(for functionName: T) -> Any? {
     let invocation = self.invocation(for: functionName)
     return invocation.parameter(for: Keys.defaultReturnValue) as? (() -> Void)
   }
@@ -110,7 +109,7 @@ final class _Actions {
 final class _Invocations {
   private var history = [_Invocation]()
 
-  func record(_ invocation: _Invocation) {
+  fileprivate func record(_ invocation: _Invocation) {
     history += [invocation]
   }
 
@@ -137,7 +136,7 @@ final class _Invocations {
 
 // MARK: - Sourcery Mocks
 
-class MockMyObject: NSObject, Testing {
+class MockMyObject: NSObject, MyObjectable {
     var aVarible: Bool {
         get { return _aVarible }
         set(value) { _aVarible = value }

@@ -1,7 +1,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-	var myObject: Testing = MyObject()
+	var myObject: MyObjectable = MyObject()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()

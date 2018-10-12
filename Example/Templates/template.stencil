@@ -15,36 +15,18 @@ import AppKit
 {% macro underlyingVariableName variable %}_{{ variable.name }}{% endmacro %}
 {% macro mockedClassName className %}Mock{{ className }}{% endmacro %}
 {% macro functionEnumName %}funcs{% endmacro %}
-{% macro functionKeyName method count %}{% call swiftifyMethodName method.selectorName %}{{ count }}{% endmacro %}
+{% macro functionKeyName method count %}{{ method.shortName }}{{ count }}{% endmacro %}
 {% macro parametersEnumName method count %}{% call functionKeyName method count %}Parameters{% endmacro %}
 {% macro invocationsVariableName  %}invocations{% endmacro %}
 {% macro actionsVariableName  %}actions{% endmacro %}
-
-{% macro methodReceivedParameters method %}
-    {%if method.parameters.count == 1 %}
-        {% call swiftifyMethodName method.selectorName %}Received{% for param in method.parameters %}{{ param.name|upperFirstLetter }} = {{ param.name }}{% endfor %}
-    {% else %}
-    {% if not method.parameters.count == 0 %}
-        {% call swiftifyMethodName method.selectorName %}ReceivedArguments = ({% for param in method.parameters %}{{ param.name }}: {{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %})
-    {% endif %}
-    {% endif %}
-{% endmacro %}
-{% macro methodClosureName method %}{% call swiftifyMethodName method.selectorName %}{% call parametersToString method.parameters %}Closure{% endmacro %}
-{% macro methodClosureCallParameters method %}{% for param in method.parameters %}{{ param.name }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endmacro %}
-{% macro parametersToString parameters %}{% for param in parameters %}{{ param.name|upperFirstLetter }}{% endfor %}{% endmacro %}
+{% macro uniqueIdentifierForEnumParameter method param %}{{ method.name }}.{{ param.name }}{% endmacro %}
 
 {% macro mockMethod method count %}
     //MARK: - {{ method.shortName }}
 
-{% if method.isInitializer %}
-    required {{ method.name }} {
-        {% call methodReceivedParameters method %}
-        {% call methodClosureName method %}?({% call methodClosureCallParameters method %})
-    }
-{% else %}
-    func {{ method.name }}{% if method.throws %}{{ ' throws' }}{% endif %}{% if not method.returnTypeName.isVoid %} -> {{ method.returnTypeName }}{% endif %} {
+    {% if method.isInitializer %}required {{ method.name }}{% else %}func {{ method.name }}{% endif %}{% if method.throws and not method.isInitializer %}{{ ' throws' }}{% endif %}{% if not method.returnTypeName.isVoid and not method.isInitializer %} -> {{ method.returnTypeName }}{% endif %} {
         let functionName = {% call functionEnumName %}.{% call functionKeyName method count %}
-        {% if method.throws %}
+        {% if method.throws and not method.isInitializer %}
         if let error = {% call actionsVariableName %}.error(for: functionName) {
             throw error
         }
@@ -61,14 +43,13 @@ import AppKit
         {% endfor %}
         {% call invocationsVariableName %}.record(invocation)
         {% call actionsVariableName %}.closure(for: functionName)?()
-        {% if not method.returnTypeName.isVoid %}
+        {% if not method.returnTypeName.isVoid and not method.isInitializer %}
         {% if method.annotations.returnValue %}
         {% call actionsVariableName %}.setDefaultReturnValue({{ method.annotations.returnValue }}, for: functionName)
         {% endif %}
-        return {% call actionsVariableName %}.returnValue(for: functionName) as! {{ method.returnTypeName }}
+        return {% call actionsVariableName %}.returnValue(for: functionName){% if method.isOptionalReturnType %} as? {% else %} as! {% endif %}{{ method.unwrappedReturnTypeName }}
         {% endif %}
     }
-{% endif %}
 {% endmacro %}
 
 {% macro mockOptionalVariable variable %}
@@ -92,14 +73,14 @@ import AppKit
         get { return {% call underlyingVariableName variable %} }
         set(value) { {% call underlyingVariableName variable %} = value }
     }
-    {% if variable.type.based.Mockable and variable.type.annotations.name %}
+    {% if variable.annotations.value %}
+    var {% call underlyingVariableName variable %}: {{ variable.typeName }}! = {{ variable.annotations.value }}
+    {% elif variable.type.based.Mockable and variable.type.annotations.name %}
     var {% call underlyingVariableName variable %}: {{ variable.typeName }}! = Mock{{ variable.type.annotations.name }}()
     {% elif variable.type.based.Mockable %}
     var {% call underlyingVariableName variable %}: {{ variable.typeName }}! = Mock{{ variable.typeName }}()
     {% elif variable.typeName|hasPrefix:"NS" or variable.typeName|hasPrefix:"UI" %}
     var {% call underlyingVariableName variable %}: {{ variable.typeName }}! = {{ variable.typeName }}()
-    {% elif variable.annotations.value %}
-    var {% call underlyingVariableName variable %}: {{ variable.typeName }}! = {{ variable.annotations.value }}
     {% else %}
     var {% call underlyingVariableName variable %}: {{ variable.typeName }}!
     {% endif %}
@@ -120,10 +101,10 @@ final class {% call helperClassPrefix %}Invocation {
     self.name = name
   }
 
-  func set<T: {% call helperClassPrefix %}StringRawRepresentable>(parameter: Any, forKey key: T) {
+  fileprivate func set<T: {% call helperClassPrefix %}StringRawRepresentable>(parameter: Any, forKey key: T) {
     parameters[key.rawValue] = parameter
   }
-  func parameter<T: {% call helperClassPrefix %}StringRawRepresentable>(for key: T) -> Any? {
+  fileprivate func parameter<T: {% call helperClassPrefix %}StringRawRepresentable>(for key: T) -> Any? {
     return parameters[key.rawValue]
   }
 }
@@ -161,11 +142,11 @@ final class {% call helperClassPrefix %}Actions {
 
   // MARK: - defaultReturnValue
 
-  func setDefaultReturnValue<T: {% call helperClassPrefix %}StringRawRepresentable>(_ value: Any, for functionName: T) {
+  fileprivate func setDefaultReturnValue<T: {% call helperClassPrefix %}StringRawRepresentable>(_ value: Any, for functionName: T) {
     let invocation = self.invocation(for: functionName)
     invocation.set(parameter: value, forKey: Keys.defaultReturnValue)
   }
-  func defaultReturnValue<T: {% call helperClassPrefix %}StringRawRepresentable>(for functionName: T) -> Any? {
+  fileprivate func defaultReturnValue<T: {% call helperClassPrefix %}StringRawRepresentable>(for functionName: T) -> Any? {
     let invocation = self.invocation(for: functionName)
     return invocation.parameter(for: Keys.defaultReturnValue) as? (() -> Void)
   }
@@ -196,7 +177,7 @@ final class {% call helperClassPrefix %}Actions {
 final class {% call helperClassPrefix %}Invocations {
   private var history = [{% call helperClassPrefix %}Invocation]()
 
-  func record(_ invocation: {% call helperClassPrefix %}Invocation) {
+  fileprivate func record(_ invocation: {% call helperClassPrefix %}Invocation) {
     history += [invocation]
   }
 
@@ -248,7 +229,7 @@ class {% if type.annotations.name %}{% call mockedClassName type.annotations.nam
     {% if not method.parameters.count == 0 %}
     enum {% call parametersEnumName method forloop.counter %}: String, {% call helperClassPrefix %}StringRawRepresentable {
     {% for parameter in method.parameters %}
-      case {{ parameter.name }}
+      case {{ parameter.name }} = "{% call uniqueIdentifierForEnumParameter method parameter %}"
     {% endfor %}
     }
     {% endif %}

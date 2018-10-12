@@ -52,8 +52,8 @@ protocol Mockable {} // Sourcery
 Create a protocol, and implement `Mockable`. For example:
 
 ```
-// sourcery: name = Test, inherits = NSObject
-protocol Testing: Mockable {
+// sourcery: name = MyObject, inherits = NSObject
+protocol MyObjectable: Mockable {
 	// sourcery: value = false
 	var aVarible: Bool { get }
 	// sourcery: returnValue = false
@@ -63,7 +63,7 @@ protocol Testing: Mockable {
 
 ### 6. Add pre-build script
 
-In your Swift project add this pre-build script phase before your `Compile Sources` phase:
+In your Swift project test target add this pre-build script phase before your `Compile Sources` phase:
 
 ```
 /bin/sh
@@ -84,13 +84,11 @@ You can now write your tests in your test target against your generated mocks
 Each Mock class has the following items you can use whilst testing:
 
 ```
-let mock = MockObject()
+let mock = MockMyObject()
 mock.invocations // monitors function invocations
 mock.actions // stores function actions
 mock.funcs // enum of all function names 
-<functionName1>Parameters // enum of all parameters in functionName1`
-<functionName2>Parameters // enum of all parameters in functionName2
-//...etc
+mock.foo1Parameters // enum of all parameters in foo()
 
 class Actions {
   // get / set closure for a function name
@@ -140,7 +138,7 @@ Note that all `NS` / `UI` objects will be automatically mocked with a default va
 
 ## Known Issues
 
-`init()` definitions in protocols aren't yet supported. This is a WIP.
+Nothing yet. Please report any issues you may find!
 
 ## Credits
 

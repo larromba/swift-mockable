@@ -1,14 +1,14 @@
 import Foundation
 
 // sourcery: name = MyObject, inherits = NSObject
-protocol Testing: Mockable {
+protocol MyObjectable: Mockable {
 	// sourcery: value = false
 	var aVarible: Bool { get }
 	// sourcery: returnValue = false
 	func foo() -> Bool
 }
 
-class MyObject: Testing {
+class MyObject: NSObject, MyObjectable {
 	var aVarible: Bool = false
 
 	func foo() -> Bool {
