@@ -161,8 +161,7 @@ You can add annotations to:
 * **inherits**: the classes the mock should inherit from. if there are more than one, use quotes, e.g. `"NSObject, MyObject"`
 * **init**: adds boiler plate inits to your mock object. 
 
-  accepted values:
-	*coder*: e.g. use with `UIViewController` subclass
+	*init = coder*
 
 ```
 	required init?(coder aDecoder: NSCoder) {
