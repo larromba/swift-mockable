@@ -104,7 +104,7 @@ final class {% call helperClassPrefix %}Invocation {
   fileprivate func set<T: {% call helperClassPrefix %}StringRawRepresentable>(parameter: Any, forKey key: T) {
     parameters[key.rawValue] = parameter
   }
-  fileprivate func parameter<T: {% call helperClassPrefix %}StringRawRepresentable>(for key: T) -> Any? {
+  func parameter<T: {% call helperClassPrefix %}StringRawRepresentable>(for key: T) -> Any? {
     return parameters[key.rawValue]
   }
 }

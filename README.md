@@ -105,16 +105,31 @@ class Actions {
 }
 
 class Invocations {
+  // returns yes if function was invoked
   func isInvoked<T: StringRawRepresentable>(_ name: T) -> Bool
+
+  // returns the number of times a function was invoked
   func numOfTimesInvoked<T: StringRawRepresentable>(_ name: T)
+
+  // returns all functions invoked
   func allInvocations() -> [Invocation]
+
+  // returns all functions of a given name invoked
   func findInvocations<T: StringRawRepresentable>(for name: T) -> [Invocation]
+
+  // returns a parameter of a given name from a function. you must cast it to the expected type
   func findParameter<T: StringRawRepresentable, U: StringRawRepresentable>(_ key: T, inFunction name: U) -> Any? {}
 }
 
 class Invocation {
+  // name of the function
   let name: String
+
+  // time function was called
   let date = Date()
+
+  // returns parameter of a given name. you must cast it to the expected type
+  func parameter<T: {% call helperClassPrefix %}StringRawRepresentable>(for key: T) -> Any?
 }
 ```
 
@@ -143,4 +158,3 @@ Nothing yet. Please report any issues you may find!
 ## Credits
 
 This script has been adapted from `AutoMockable.stencil` by [Sourcery](https://github.com/krzysztofzablocki/Sourcery)
-
