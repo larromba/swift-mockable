@@ -15,7 +15,7 @@ import AppKit
 {% macro underlyingVariableName variable %}_{{ variable.name }}{% endmacro %}
 {% macro mockedClassName className %}Mock{{ className }}{% endmacro %}
 {% macro functionEnumName %}funcs{% endmacro %}
-{% macro functionKeyName method count %}{{ method.shortName }}{{ count }}{% endmacro %}
+{% macro functionKeyName method count %}{{ method.callName }}{{ count }}{% endmacro %}
 {% macro parametersEnumName method count %}{% call functionKeyName method count %}Parameters{% endmacro %}
 {% macro invocationsVariableName  %}invocations{% endmacro %}
 {% macro actionsVariableName  %}actions{% endmacro %}
@@ -120,7 +120,7 @@ final class {% call helperClassPrefix %}Actions {
 
   // MARK: - closure
 
-  func setClosure<T: {% call helperClassPrefix %}StringRawRepresentable>(_ value: () -> Void, for functionName: T) {
+  func setClosure<T: {% call helperClassPrefix %}StringRawRepresentable>(_ value: @escaping () -> Void, for functionName: T) {
     let invocation = self.invocation(for: functionName)
     invocation.set(parameter: value, forKey: Keys.closure)
   }
