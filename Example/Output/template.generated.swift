@@ -13,11 +13,6 @@ import AppKit
 
 @testable import Example
 
-
-
-
-
-
 // MARK: - Sourcery Helper
 
 protocol _StringRawRepresentable: RawRepresentable {
@@ -52,7 +47,7 @@ final class _Actions {
 
   // MARK: - closure
 
-  func setClosure<T: _StringRawRepresentable>(_ value: () -> Void, for functionName: T) {
+  func setClosure<T: _StringRawRepresentable>(_ value: @escaping () -> Void, for functionName: T) {
     let invocation = self.invocation(for: functionName)
     invocation.set(parameter: value, forKey: Keys.closure)
   }
@@ -117,20 +112,20 @@ final class _Invocations {
     return history.contains(where: { $0.name == name.rawValue })
   }
 
-  func numOfTimesInvoked<T: _StringRawRepresentable>(_ name: T) -> Int {
+  func count<T: _StringRawRepresentable>(_ name: T) -> Int {
     return history.filter {  $0.name == name.rawValue }.count
   }
 
-  func allInvocations() -> [_Invocation] {
+  func all() -> [_Invocation] {
     return history.sorted { $0.date < $1.date }
   }
 
-  func findInvocations<T: _StringRawRepresentable>(for name: T) -> [_Invocation] {
+  func find<T: _StringRawRepresentable>(for name: T) -> [_Invocation] {
     return history.filter {  $0.name == name.rawValue }.sorted { $0.date < $1.date }
   }
 
-  func findParameter<T: _StringRawRepresentable, U: _StringRawRepresentable>(_ key: T, inFunction name: U) -> Any? {
-    return history.filter {  $0.name == name.rawValue }.first?.parameter(for: key)
+  func find<T: _StringRawRepresentable, U: _StringRawRepresentable>(parameter: T, inFunction name: U) -> Any? {
+    return history.filter { $0.name == name.rawValue }.first?.parameter(for: parameter)
   }
 }
 
@@ -145,18 +140,18 @@ class MockMyObject: NSObject, MyObjectable {
     let invocations = _Invocations()
     let actions = _Actions()
 
-    enum funcs: String, _StringRawRepresentable {
-      case foo1
-    }
-
-    //MARK: - foo
+    // MARK: - foo
 
     func foo() -> Bool {
-        let functionName = funcs.foo1
+        let functionName = foo1.name
         let invocation = _Invocation(name: functionName.rawValue)
         invocations.record(invocation)
         actions.closure(for: functionName)?()
         actions.setDefaultReturnValue(false, for: functionName)
         return actions.returnValue(for: functionName) as! Bool
+    }
+
+    enum foo1: String, _StringRawRepresentable {
+      case name = "foo1"
     }
 }

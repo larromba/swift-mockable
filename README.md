@@ -87,8 +87,8 @@ Each Mock class has the following items you can use whilst testing:
 let mock = MockMyObject()
 mock.invocations // monitors function invocations
 mock.actions // stores function actions
-mock.funcs // enum of all function names 
-mock.foo1Parameters // enum of all parameters in foo()
+mock.foo1.name // method foo's name
+mock.foo1.params // enum of all parameters in foo()
 
 class Actions {
   // get / set closure for a function name
@@ -109,16 +109,16 @@ class Invocations {
   func isInvoked<T: StringRawRepresentable>(_ name: T) -> Bool
 
   // returns the number of times a function was invoked
-  func numOfTimesInvoked<T: StringRawRepresentable>(_ name: T)
+  func count<T: StringRawRepresentable>(_ name: T) -> Int
 
   // returns all functions invoked
-  func allInvocations() -> [Invocation]
+  func all() -> [Invocation]
 
   // returns all functions of a given name invoked
-  func findInvocations<T: StringRawRepresentable>(for name: T) -> [Invocation]
+  func find<T: StringRawRepresentable>(_ name: T) -> [Invocation]
 
   // returns a parameter of a given name from a function. you must cast it to the expected type
-  func findParameter<T: StringRawRepresentable, U: StringRawRepresentable>(_ key: T, inFunction name: U) -> Any? {}
+  func find<T: StringRawRepresentable, U: StringRawRepresentable>(parameter: T, inFunction name: U) -> Any?
 }
 
 class Invocation {
@@ -145,7 +145,7 @@ class ViewControllerTests: XCTestCase {
 
     // test
     viewController.viewDidLoad()
-    XCTAssertTrue(sut.invocations.isInvoked(MockMyObject.funcs.foo1))
+    XCTAssertTrue(sut.invocations.isInvoked(MockMyObject.foo1.name))
   }
 }
 ```
