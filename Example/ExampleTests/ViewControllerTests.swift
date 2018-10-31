@@ -12,6 +12,6 @@ class ViewControllerTests: XCTestCase {
 
 		// test
 		viewController.viewDidLoad()
-		XCTAssertTrue(sut.invocations.isInvoked(MockMyObject.funcs.foo1))
+		XCTAssertTrue(sut.invocations.isInvoked(MockMyObject.foo1.name))
 	}
 }
