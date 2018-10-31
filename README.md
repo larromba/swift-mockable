@@ -91,16 +91,16 @@ mock.foo1.name // method foo's name
 mock.foo1.params // enum of all parameters in foo()
 
 class Actions {
-  // get / set closure for a function name
-  func setClosure<T: StringRawRepresentable>(_ value: () -> Void, for functionName: T)
+  // get / set closure to run when a function is called
+  func set<T: StringRawRepresentable>(closure: () -> Void, for functionName: T)
   func closure<T: StringRawRepresentable>(for functionName: T) -> (() -> Void)?
 	
-  // get / set return value for a function name
-  func setReturnValue<T: StringRawRepresentable>(_ value: Any, for functionName: T)
+  // get / set return value for a function
+  func set<T: StringRawRepresentable>(returnValue value: Any, for functionName: T)
   func returnValue<T: StringRawRepresentable>(for functionName: T) -> Any?
   
-  // get / set throw error for a function name
-  func setError<T: StringRawRepresentable>(_ value: Error, for functionName: T) {}
+  // get / set error to be thrown (only for a throwable function)
+  func set<T: StringRawRepresentable>(error: Error, for functionName: T) {}
   func error<T: StringRawRepresentable>(for functionName: T) -> Error? {}
 }
 
@@ -108,16 +108,16 @@ class Invocations {
   // returns yes if function was invoked
   func isInvoked<T: StringRawRepresentable>(_ name: T) -> Bool
 
-  // returns the number of times a function was invoked
+  // the number of times a function was invoked
   func count<T: StringRawRepresentable>(_ name: T) -> Int
 
-  // returns all functions invoked
+  // all functions invoked
   func all() -> [Invocation]
 
-  // returns all functions of a given name invoked
+  // all functions invoked of a given name
   func find<T: StringRawRepresentable>(_ name: T) -> [Invocation]
 
-  // returns a parameter of a given name from a function. you must cast it to the expected type
+  // gets a parameter that was passed to a function. you must cast it to the expected type
   func find<T: StringRawRepresentable, U: StringRawRepresentable>(parameter: T, inFunction name: U) -> Any?
 }
 
@@ -128,7 +128,7 @@ class Invocation {
   // time function was called
   let date = Date()
 
-  // returns parameter of a given name. you must cast it to the expected type
+  // returns a parameter that was passed to a function. you must cast it to the expected type
   func parameter<T: StringRawRepresentable>(for key: T) -> Any?
 }
 

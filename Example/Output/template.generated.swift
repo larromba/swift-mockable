@@ -47,9 +47,9 @@ final class _Actions {
 
   // MARK: - closure
 
-  func setClosure<T: _StringRawRepresentable>(_ value: @escaping () -> Void, for functionName: T) {
+  func set<T: _StringRawRepresentable>(closure: @escaping () -> Void, for functionName: T) {
     let invocation = self.invocation(for: functionName)
-    invocation.set(parameter: value, forKey: Keys.closure)
+    invocation.set(parameter: closure, forKey: Keys.closure)
   }
   func closure<T: _StringRawRepresentable>(for functionName: T) -> (() -> Void)? {
     let invocation = self.invocation(for: functionName)
@@ -58,7 +58,7 @@ final class _Actions {
 
   // MARK: - returnValue
 
-  func setReturnValue<T: _StringRawRepresentable>(_ value: Any, for functionName: T) {
+  func set<T: _StringRawRepresentable>(returnValue value: Any, for functionName: T) {
     let invocation = self.invocation(for: functionName)
     invocation.set(parameter: value, forKey: Keys.returnValue)
   }
@@ -69,7 +69,7 @@ final class _Actions {
 
   // MARK: - defaultReturnValue
 
-  fileprivate func setDefaultReturnValue<T: _StringRawRepresentable>(_ value: Any, for functionName: T) {
+  fileprivate func set<T: _StringRawRepresentable>(defaultReturnValue value: Any, for functionName: T) {
     let invocation = self.invocation(for: functionName)
     invocation.set(parameter: value, forKey: Keys.defaultReturnValue)
   }
@@ -80,9 +80,9 @@ final class _Actions {
 
   // MARK: - error
 
-  func setError<T: _StringRawRepresentable>(_ value: Error, for functionName: T) {
+  func set<T: _StringRawRepresentable>(error: Error, for functionName: T) {
     let invocation = self.invocation(for: functionName)
-    invocation.set(parameter: value, forKey: Keys.error)
+    invocation.set(parameter: error, forKey: Keys.error)
   }
   func error<T: _StringRawRepresentable>(for functionName: T) -> Error? {
     let invocation = self.invocation(for: functionName)
@@ -120,7 +120,7 @@ final class _Invocations {
     return history.sorted { $0.date < $1.date }
   }
 
-  func find<T: _StringRawRepresentable>(for name: T) -> [_Invocation] {
+  func find<T: _StringRawRepresentable>(_ name: T) -> [_Invocation] {
     return history.filter {  $0.name == name.rawValue }.sorted { $0.date < $1.date }
   }
 
@@ -147,7 +147,7 @@ class MockMyObject: NSObject, MyObjectable {
         let invocation = _Invocation(name: functionName.rawValue)
         invocations.record(invocation)
         actions.closure(for: functionName)?()
-        actions.setDefaultReturnValue(false, for: functionName)
+        actions.set(defaultReturnValue: false, for: functionName)
         return actions.returnValue(for: functionName) as! Bool
     }
 
