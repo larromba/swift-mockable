@@ -55,10 +55,11 @@ Create a protocol, and implement `Mockable`. For example:
 ```
 // sourcery: name = MyObject, inherits = NSObject
 protocol MyObjectable: Mockable {
-	// sourcery: value = false
-	var aVarible: Bool { get }
-	// sourcery: returnValue = false
-	func foo() -> Bool
+  // sourcery: value = false
+  var aVarible: Bool { get }
+
+  // sourcery: returnValue = false
+  func foo() -> Bool
 }
 ```
 
