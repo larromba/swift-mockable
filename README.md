@@ -18,11 +18,11 @@ In your terminal run:
 cd path/to/swift/project
 mkdir Output
 mkdir Templates
+touch .sourcery.yml
+open .sourcery.yml
 cd ~/Desktop
 git clone git@bitbucket.org:larromba/swift-mockable.git
 cp swift-mockable/Templates/template.stencil path/to/swift/project/Templates
-touch .sourcery.yml
-open .sourcery.yml
 ```
 
 In `.sourcery.yml` add:
