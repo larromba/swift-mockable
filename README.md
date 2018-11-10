@@ -175,7 +175,7 @@ To edit the code generation, you can add annotations to protocols inheriting fro
 	*init = coder*
 
 ```
-	required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
 	}
 ```
