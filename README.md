@@ -174,7 +174,7 @@ To edit the code generation, you can add annotations to protocols inheriting fro
 
 ```
 	required init?(coder aDecoder: NSCoder) {
-     fatalError("init(coder:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
 	}
 ```
 * **associatedtype**: associatedtypes are [not yet supported](https://github.com/krzysztofzablocki/Sourcery/issues/539) by Sourcery out of the box, so you must mark them as an annotation. In the mock they become:
