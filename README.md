@@ -150,16 +150,25 @@ class ViewControllerTests: XCTestCase {
 }
 ```
 
-## Editing Code Generation
+## Modifying Code Generation
 
-To edit the code generation, you can add annotations to your protocols inheriting from `Mockable` in the form of `// sourcery: ...` comments.
-
-You can add annotations to:
+To edit the code generation, you can add annotations to protocols inheriting from `Mockable` in the form of `// sourcery: ...` comments.
 
 #### protocol definitions
-* **name**: the name to create a mock class from, e.g. `Object` would become `MockObject`
-* **inherits**: the classes the mock should inherit from. if there are more than one, use quotes, e.g. `"NSObject, MyObject"`
-* **init**: adds boiler plate inits to your mock object. 
+
+```
+    // sourcery: name = Object
+    // sourcery: inherits = "NSObject, MyObject"
+    // sourcery: init = coder
+    // sourcery: associatedtype = MyType
+    protocol Objectable: Mockable {
+        associatedtype MyType
+    }
+```
+
+* **name**: normalized name to create a mock class from, e.g. `Object` would become `MockObject`
+* **inherits**: classes the mock should inherit from. if there are more than one, use quotes, e.g. `"NSObject, MyObject"`
+* **init**: add boiler plate init code to your mock object. 
 
 	*init = coder*
 
@@ -168,12 +177,35 @@ You can add annotations to:
      fatalError("init(coder:) has not been implemented")
 	}
 ```
+* **associatedtype**: associatedtypes are [not yet supported](https://github.com/krzysztofzablocki/Sourcery/issues/539) by Sourcery out of the box, so you must mark them as an annotation. In the mock they become:
+
+```
+    class MockObject: Objectable {
+        typealias MyType = Any
+    }
+```
 
 #### protocol variables
-* **value**: the default value to be initilised with, e.g. `NSTextField()`
+
+```
+    protocol Objectable: Mockable {
+        // sourcery: value = 2
+        var myVariable: Int { get }
+    }
+```
+
+* **value**: the default value to be initilised with
 
 #### protocol functions
-* **returnValue**: the mock value to be returned, e.g. `true`
+
+```
+    protocol Objectable: Mockable {
+        // sourcery: returnValue = true
+        func foo() -> Bool
+    }
+```
+
+* **returnValue**: the default value to be returned when none are set via the `Actions` class
 
 Note that all `NS` / `UI` objects will be automatically mocked with a default value, e.g. `var x = NSTextField()`. All variables whose type inherits from `Mockable` will also be mocked with a default value, e.g. `var x = MockObject()`.
 
