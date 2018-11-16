@@ -242,6 +242,7 @@ Nothing yet. Please report any issues you may find!
 
 ## Licence
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
 [Sourcery](https://github.com/krzysztofzablocki/Sourcery/blob/master/LICENSE)
 
 ## Credits
