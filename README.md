@@ -161,6 +161,8 @@ class ViewControllerTests: XCTestCase {
 }
 ```
 
+To see tests in a real project, go [here](https://github.com/larromba/grafitti-backgrounds/)
+
 ## Modifying Code Generation
 
 To edit code generation, you can add annotations to protocols inheriting from `Mockable` in the form of `// sourcery: ...` comments.
