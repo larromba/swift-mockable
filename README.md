@@ -161,7 +161,7 @@ class ViewControllerTests: XCTestCase {
 }
 ```
 
-To see tests in a real project, go [here](https://github.com/larromba/grafitti-backgrounds/)
+To see tests in a real project, go [here](https://github.com/larromba/graffiti-backgrounds/)
 
 ## Modifying Code Generation
 
