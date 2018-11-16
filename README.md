@@ -1,18 +1,22 @@
-# Swift Mockable
+# Swift Mockable [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) [![Open Source Love png1](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
+
+| master  | dev |
+| ------------- | ------------- |
+| [![Build Status](https://travis-ci.com/larromba/swift-mockable.svg?branch=master)](https://travis-ci.com/larromba/swift-mockable) | [![Build Status](https://travis-ci.com/larromba/swift-mockable.svg?branch=develop)](https://travis-ci.com/larromba/swift-mockable) |
+
+## About
+Automatically create mock objects at build time for your iOS and macOS Swift projects
 
 ## Getting started
 
 ### 1. Installing Sourcery
-
 Open your terminal and run:
 `brew install sourcery`
 
 ### 2. Create project
-
 Open XCode and create a new iOS or OSX project in Swift
 
 ### 3. Setup environment
-
 In your terminal run:
 ```
 cd path/to/swift/project
@@ -39,7 +43,6 @@ output:
 Open `template.stencil` and update `<YOUR_APP_TARGET_NAME>` to be the name of your app target
 
 ### 4. Add Mockable protocol
-
 In your Swift project, create a new file `Mockable.swift` and add:
 
 ```
@@ -49,7 +52,6 @@ protocol Mockable {} // Sourcery
 ```
 
 ### 5. Mock something
-
 Create a protocol, and implement `Mockable`. For example:
 
 ```
@@ -64,7 +66,6 @@ protocol MyObjectable: Mockable {
 ```
 
 ### 6. Add pre-build script
-
 In your Swift project test target add this pre-build script phase before your `Compile Sources` phase:
 
 ```
@@ -73,14 +74,12 @@ sourcery
 ```
 
 ### 7. Generate mocked classes
-
 Run your project to generate a mocked class file found in:
 `Generated/mocks.generated.swift`
 
 Add `mocks.generated.swift` to your tests target (don't copy). You only need to do this once. The file will update on each test build
 
 ### 8. Write tests
-
 You can now write your tests using your generated mocks
 
 Each Mock class has the following tools you can use whilst testing:
@@ -164,7 +163,6 @@ class ViewControllerTests: XCTestCase {
 To see tests in a real project, go [here](https://github.com/larromba/graffiti-backgrounds/)
 
 ## Modifying Code Generation
-
 To edit code generation, you can add annotations to protocols inheriting from `Mockable` in the form of `// sourcery: ...` comments.
 
 #### protocol definitions
@@ -240,9 +238,12 @@ cp djaneiro/Syntaxes/HTML\ (Django).tmLanguage ~/Library/Application\ Support/Su
 Now open `mocks.stencil` in  `Sublime Text` and select from the top menu bar: `View -> Syntax -> HTML (Django)`
 
 ## Known Issues
-
 Nothing yet. Please report any issues you may find!
 
-## Credits
+## Licence
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
+[Sourcery](https://github.com/krzysztofzablocki/Sourcery/blob/master/LICENSE)
+
+## Credits
 This script has been adapted from `AutoMockable.stencil` by [Sourcery](https://github.com/krzysztofzablocki/Sourcery)
