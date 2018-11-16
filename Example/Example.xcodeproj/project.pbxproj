@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F13D51D219F537200891DF7 /* mocks.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F13D51C219F537200891DF7 /* mocks.generated.swift */; };
 		7FC46649216F8C5100A73817 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC46648216F8C5100A73817 /* AppDelegate.swift */; };
 		7FC4664B216F8C5100A73817 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4664A216F8C5100A73817 /* ViewController.swift */; };
 		7FC4664E216F8C5100A73817 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FC4664C216F8C5100A73817 /* Main.storyboard */; };
 		7FC46650216F8C5100A73817 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FC4664F216F8C5100A73817 /* Assets.xcassets */; };
 		7FC46653216F8C5100A73817 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FC46651216F8C5100A73817 /* LaunchScreen.storyboard */; };
 		7FC4665E216F8C5200A73817 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4665D216F8C5200A73817 /* ViewControllerTests.swift */; };
-		7FC46669216F8CC700A73817 /* Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC46668216F8CC700A73817 /* Testing.swift */; };
+		7FC46669216F8CC700A73817 /* MyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC46668216F8CC700A73817 /* MyObject.swift */; };
 		7FC4666B216F8CCF00A73817 /* Mockable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4666A216F8CCF00A73817 /* Mockable.swift */; };
-		7FC4666E216F8D7600A73817 /* template.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC4666D216F8D7500A73817 /* template.generated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F13D51C219F537200891DF7 /* mocks.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = mocks.generated.swift; path = ExampleTests/mocks.generated.swift; sourceTree = SOURCE_ROOT; };
 		7FC46645216F8C5100A73817 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC46648216F8C5100A73817 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FC4664A216F8C5100A73817 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,9 +40,8 @@
 		7FC46659216F8C5200A73817 /* ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FC4665D216F8C5200A73817 /* ViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
 		7FC4665F216F8C5200A73817 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7FC46668216F8CC700A73817 /* Testing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Testing.swift; sourceTree = "<group>"; };
+		7FC46668216F8CC700A73817 /* MyObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyObject.swift; sourceTree = "<group>"; };
 		7FC4666A216F8CCF00A73817 /* Mockable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mockable.swift; sourceTree = "<group>"; };
-		7FC4666D216F8D7500A73817 /* template.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = template.generated.swift; path = Output/template.generated.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +62,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F13D51E219F537400891DF7 /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				7F13D51C219F537200891DF7 /* mocks.generated.swift */,
+			);
+			name = Generated;
+			sourceTree = "<group>";
+		};
 		7FC4663C216F8C5100A73817 = {
 			isa = PBXGroup;
 			children = (
@@ -85,7 +93,7 @@
 			children = (
 				7FC46648216F8C5100A73817 /* AppDelegate.swift */,
 				7FC4664A216F8C5100A73817 /* ViewController.swift */,
-				7FC46668216F8CC700A73817 /* Testing.swift */,
+				7FC46668216F8CC700A73817 /* MyObject.swift */,
 				7FC4666A216F8CCF00A73817 /* Mockable.swift */,
 				7FC4664C216F8C5100A73817 /* Main.storyboard */,
 				7FC4664F216F8C5100A73817 /* Assets.xcassets */,
@@ -99,7 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				7FC4665D216F8C5200A73817 /* ViewControllerTests.swift */,
-				7FC4666D216F8D7500A73817 /* template.generated.swift */,
+				7F13D51E219F537400891DF7 /* Generated */,
 				7FC4665F216F8C5200A73817 /* Info.plist */,
 			);
 			path = ExampleTests;
@@ -224,7 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FC46669216F8CC700A73817 /* Testing.swift in Sources */,
+				7FC46669216F8CC700A73817 /* MyObject.swift in Sources */,
 				7FC4664B216F8C5100A73817 /* ViewController.swift in Sources */,
 				7FC46649216F8C5100A73817 /* AppDelegate.swift in Sources */,
 				7FC4666B216F8CCF00A73817 /* Mockable.swift in Sources */,
@@ -235,7 +243,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FC4666E216F8D7600A73817 /* template.generated.swift in Sources */,
+				7F13D51D219F537200891DF7 /* mocks.generated.swift in Sources */,
 				7FC4665E216F8C5200A73817 /* ViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

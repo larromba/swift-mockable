@@ -19,6 +19,15 @@ protocol _StringRawRepresentable: RawRepresentable {
   var rawValue: String { get }
 }
 
+struct _Variable<T> {
+  let date = Date()
+  var variable: T
+
+  init(_ variable: T) {
+    self.variable = variable
+  }
+}
+
 final class _Invocation {
   let name: String
   let date = Date()
@@ -38,23 +47,11 @@ final class _Invocation {
 
 final class _Actions {
   enum Keys: String, _StringRawRepresentable {
-    case closure
     case returnValue
     case defaultReturnValue
     case error
   }
   private var invocations: [_Invocation] = []
-
-  // MARK: - closure
-
-  func set<T: _StringRawRepresentable>(closure: @escaping () -> Void, for functionName: T) {
-    let invocation = self.invocation(for: functionName)
-    invocation.set(parameter: closure, forKey: Keys.closure)
-  }
-  func closure<T: _StringRawRepresentable>(for functionName: T) -> (() -> Void)? {
-    let invocation = self.invocation(for: functionName)
-    return invocation.parameter(for: Keys.closure) as? (() -> Void)
-  }
 
   // MARK: - returnValue
 
@@ -123,10 +120,6 @@ final class _Invocations {
   func find<T: _StringRawRepresentable>(_ name: T) -> [_Invocation] {
     return history.filter {  $0.name == name.rawValue }.sorted { $0.date < $1.date }
   }
-
-  func find<T: _StringRawRepresentable, U: _StringRawRepresentable>(parameter: T, inFunction name: U) -> Any? {
-    return history.filter { $0.name == name.rawValue }.first?.parameter(for: parameter)
-  }
 }
 
 // MARK: - Sourcery Mocks
@@ -134,9 +127,10 @@ final class _Invocations {
 class MockMyObject: NSObject, MyObjectable {
     var aVarible: Bool {
         get { return _aVarible }
-        set(value) { _aVarible = value }
+        set(value) { _aVarible = value; _aVaribleHistory.append(_Variable(value)) }
     }
     var _aVarible: Bool! = false
+    var _aVaribleHistory: [_Variable<Bool>] = []
     let invocations = _Invocations()
     let actions = _Actions()
 
@@ -146,7 +140,6 @@ class MockMyObject: NSObject, MyObjectable {
         let functionName = foo1.name
         let invocation = _Invocation(name: functionName.rawValue)
         invocations.record(invocation)
-        actions.closure(for: functionName)?()
         actions.set(defaultReturnValue: false, for: functionName)
         return actions.returnValue(for: functionName) as! Bool
     }
