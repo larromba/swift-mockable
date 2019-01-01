@@ -16,85 +16,85 @@ import AppKit
 // MARK: - Sourcery Helper
 
 protocol _StringRawRepresentable: RawRepresentable {
-  var rawValue: String { get }
+    var rawValue: String { get }
 }
 
 struct _Variable<T> {
-  let date = Date()
-  var variable: T
+    let date = Date()
+    var variable: T
 
-  init(_ variable: T) {
-    self.variable = variable
-  }
+    init(_ variable: T) {
+        self.variable = variable
+    }
 }
 
 final class _Invocation {
-  let name: String
-  let date = Date()
-  private var parameters: [String: Any] = [:]
+    let name: String
+    let date = Date()
+    private var parameters: [String: Any] = [:]
 
-  init(name: String) {
-    self.name = name
-  }
+    init(name: String) {
+        self.name = name
+    }
 
-  fileprivate func set<T: _StringRawRepresentable>(parameter: Any, forKey key: T) {
-    parameters[key.rawValue] = parameter
-  }
-  func parameter<T: _StringRawRepresentable>(for key: T) -> Any? {
-    return parameters[key.rawValue]
-  }
+    fileprivate func set<T: _StringRawRepresentable>(parameter: Any, forKey key: T) {
+        parameters[key.rawValue] = parameter
+    }
+    func parameter<T: _StringRawRepresentable>(for key: T) -> Any? {
+        return parameters[key.rawValue]
+    }
 }
 
 final class _Actions {
   enum Keys: String, _StringRawRepresentable {
-    case returnValue
-    case defaultReturnValue
-    case error
+      case returnValue
+      case defaultReturnValue
+      case error
   }
   private var invocations: [_Invocation] = []
 
   // MARK: - returnValue
 
   func set<T: _StringRawRepresentable>(returnValue value: Any, for functionName: T) {
-    let invocation = self.invocation(for: functionName)
-    invocation.set(parameter: value, forKey: Keys.returnValue)
+      let invocation = self.invocation(for: functionName)
+      invocation.set(parameter: value, forKey: Keys.returnValue)
   }
   func returnValue<T: _StringRawRepresentable>(for functionName: T) -> Any? {
-    let invocation = self.invocation(for: functionName)
-    return invocation.parameter(for: Keys.returnValue) ?? invocation.parameter(for: Keys.defaultReturnValue)
+      let invocation = self.invocation(for: functionName)
+      return invocation.parameter(for: Keys.returnValue) ?? invocation.parameter(for: Keys.defaultReturnValue)
   }
 
   // MARK: - defaultReturnValue
 
   fileprivate func set<T: _StringRawRepresentable>(defaultReturnValue value: Any, for functionName: T) {
-    let invocation = self.invocation(for: functionName)
-    invocation.set(parameter: value, forKey: Keys.defaultReturnValue)
+      let invocation = self.invocation(for: functionName)
+      invocation.set(parameter: value, forKey: Keys.defaultReturnValue)
   }
   fileprivate func defaultReturnValue<T: _StringRawRepresentable>(for functionName: T) -> Any? {
-    let invocation = self.invocation(for: functionName)
-    return invocation.parameter(for: Keys.defaultReturnValue) as? (() -> Void)
+      let invocation = self.invocation(for: functionName)
+      return invocation.parameter(for: Keys.defaultReturnValue) as? (() -> Void)
   }
 
   // MARK: - error
 
   func set<T: _StringRawRepresentable>(error: Error, for functionName: T) {
-    let invocation = self.invocation(for: functionName)
-    invocation.set(parameter: error, forKey: Keys.error)
+      let invocation = self.invocation(for: functionName)
+      invocation.set(parameter: error, forKey: Keys.error)
   }
   func error<T: _StringRawRepresentable>(for functionName: T) -> Error? {
-    let invocation = self.invocation(for: functionName)
-    return invocation.parameter(for: Keys.error) as? Error
+      let invocation = self.invocation(for: functionName)
+      return invocation.parameter(for: Keys.error) as? Error
   }
 
   // MARK: - private
 
   private func invocation<T: _StringRawRepresentable>(for name: T) -> _Invocation {
-    if let invocation = invocations.filter({ $0.name == name.rawValue }).first {
+      if let invocation = invocations.filter({ $0.name == name.rawValue }).first {
+          return invocation
+      }
+      let invocation = _Invocation(name: name.rawValue)
+      invocations += [invocation]
       return invocation
-    }
-    let invocation = _Invocation(name: name.rawValue)
-    invocations += [invocation]
-    return invocation
   }
 }
 
@@ -102,23 +102,23 @@ final class _Invocations {
   private var history = [_Invocation]()
 
   fileprivate func record(_ invocation: _Invocation) {
-    history += [invocation]
+      history += [invocation]
   }
 
   func isInvoked<T: _StringRawRepresentable>(_ name: T) -> Bool {
-    return history.contains(where: { $0.name == name.rawValue })
+      return history.contains(where: { $0.name == name.rawValue })
   }
 
   func count<T: _StringRawRepresentable>(_ name: T) -> Int {
-    return history.filter {  $0.name == name.rawValue }.count
+      return history.filter {  $0.name == name.rawValue }.count
   }
 
   func all() -> [_Invocation] {
-    return history.sorted { $0.date < $1.date }
+      return history.sorted { $0.date < $1.date }
   }
 
   func find<T: _StringRawRepresentable>(_ name: T) -> [_Invocation] {
-    return history.filter {  $0.name == name.rawValue }.sorted { $0.date < $1.date }
+      return history.filter {  $0.name == name.rawValue }.sorted { $0.date < $1.date }
   }
 }
 
@@ -130,9 +130,11 @@ class MockMyObject: NSObject, MyObjectable {
         set(value) { _aVarible = value; _aVaribleHistory.append(_Variable(value)) }
     }
     var _aVarible: Bool! = false
-    var _aVaribleHistory: [_Variable<Bool>] = []
+    var _aVaribleHistory: [_Variable<Bool?>] = []
     let invocations = _Invocations()
     let actions = _Actions()
+    static let invocations = _Invocations()
+    static let actions = _Actions()
 
     // MARK: - foo
 
@@ -145,6 +147,6 @@ class MockMyObject: NSObject, MyObjectable {
     }
 
     enum foo1: String, _StringRawRepresentable {
-      case name = "foo1"
+        case name = "foo1"
     }
 }
