@@ -114,6 +114,9 @@ class Invocations {
 
   // all functions invoked of a given name
   func find<T: StringRawRepresentable>(_ name: T) -> [Invocation]
+  
+  // reset history
+  func reset()
 }
 
 class Invocation {
