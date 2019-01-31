@@ -20,7 +20,7 @@ import AppKit
 {% macro actionsVariableName  %}actions{% endmacro %}
 {% macro uniqueIdentifierForEnumParameter method param %}{{ method.name | replace:" ","" }}.{{ param.name | replace:" ","" }}{% endmacro %}
 {% macro mockMethod method count %}
-    {% if method.isInitializer %}required {{ method.name }}{% else %}{% if method.isStatic %}static {% endif %}func {{ method.name | replace:"  ","" }}{% endif %}{% if method.throws and not method.isInitializer %}{{ ' throws' }}{% endif %}{% if not method.returnTypeName.isVoid and not method.isInitializer %} -> {{ method.returnTypeName }}{% endif %} {
+    {% if method.isInitializer %}required {% if method.name == "init()" %}override {% endif %}{{ method.name }}{% else %}{% if method.isStatic %}static {% endif %}func {{ method.name | replace:"  ","" }}{% endif %}{% if method.throws and not method.isInitializer %}{{ ' throws' }}{% endif %}{% if not method.returnTypeName.isVoid and not method.isInitializer %} -> {{ method.returnTypeName }}{% endif %} {
         let functionName = {% call functionKeyName method count %}.name
         {% if method.throws and not method.isInitializer %}
         if let error = {% call actionsVariableName %}.error(for: functionName) {
@@ -70,7 +70,7 @@ import AppKit
     var {% call underlyingVariableName variable %}: {% call mockVariableTypeName variable %} = Mock{{ variable.type.annotations.name }}()
     {% elif variable.type.based.Mockable %}
     var {% call underlyingVariableName variable %}: {% call mockVariableTypeName variable %} = Mock{{ variable.unwrappedTypeName }}()
-    {% elif variable.typeName|hasPrefix:"NS" or variable.typeName|hasPrefix:"UI" %}
+    {% elif variable.typeName|!contains:"." and variable.typeName|hasPrefix:"NS" or variable.typeName|hasPrefix:"UI" %}
     var {% call underlyingVariableName variable %}: {% call mockVariableTypeName variable %} = {{ variable.typeName.unwrappedTypeName }}()
     {% elif variable.isArray %}
     var {% call underlyingVariableName variable %}: {% call mockVariableTypeName variable %} = []
@@ -189,7 +189,7 @@ final class {% call helperClassPrefix %}Invocations {
         return history.filter {  $0.name == name.rawValue }.sorted { $0.date < $1.date }
     }
 
-    func reset() {
+    func clear() {
         history.removeAll()
     }
 }

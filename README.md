@@ -93,73 +93,71 @@ MockMyObject.foo1.params // enum of all parameters in foo()
 // note the method enum uses a number to differentiate between polymorphic methods
 
 class Actions {
-  // get / set return value for a function
-  func set<T: StringRawRepresentable>(returnValue value: Any, for functionName: T)
-  func returnValue<T: StringRawRepresentable>(for functionName: T) -> Any?
-  
-  // get / set error to be thrown (only for a throwable function)
-  func set<T: StringRawRepresentable>(error: Error, for functionName: T) {}
-  func error<T: StringRawRepresentable>(for functionName: T) -> Error? {}
+    // get / set return value for a function
+    func set<T: StringRawRepresentable>(returnValue value: Any, for functionName: T)
+    func returnValue<T: StringRawRepresentable>(for functionName: T) -> Any?
+
+    // get / set error to be thrown (only for a throwable function)
+    func set<T: StringRawRepresentable>(error: Error, for functionName: T) {}
+    func error<T: StringRawRepresentable>(for functionName: T) -> Error? {}
 }
 
 class Invocations {
-  // returns yes if function was invoked
-  func isInvoked<T: StringRawRepresentable>(_ name: T) -> Bool
+    // returns yes if function was invoked
+    func isInvoked<T: StringRawRepresentable>(_ name: T) -> Bool
 
-  // the number of times a function was invoked
-  func count<T: StringRawRepresentable>(_ name: T) -> Int
+    // the number of times a function was invoked
+    func count<T: StringRawRepresentable>(_ name: T) -> Int
 
-  // all functions invoked
-  func all() -> [Invocation]
+    // all functions invoked
+    func all() -> [Invocation]
 
-  // all functions invoked of a given name
-  func find<T: StringRawRepresentable>(_ name: T) -> [Invocation]
-  
-  // reset history
-  func reset()
+    // all functions invoked of a given name
+    func find<T: StringRawRepresentable>(_ name: T) -> [Invocation]
+
+    // clear history
+    func clear()
 }
 
 class Invocation {
-  // name of the function
-  let name: String
+    // name of the function
+    let name: String
 
-  // time function was called
-  let date = Date()
+    // time function was called
+    let date = Date()
 
-  // returns a parameter that was passed to a function. you must cast it to the expected type
-  func parameter<T: StringRawRepresentable>(for key: T) -> Any?
+    // returns a parameter that was passed to a function. you must cast it to the expected type
+    func parameter<T: StringRawRepresentable>(for key: T) -> Any?
 }
 
 // every time a variable is set in your mocked class, it's saved in a boxed type `Variable`. 
 // you can access the variable's entire history with: MyObject._myVariableNameHistory
 
 struct Variable<T> {
-  // date variable was set
-  let date = Date()
-  
-  // the variable
-  var variable: T
+    // date variable was set
+    let date = Date()
 
-  init(_ variable: T) {
-    self.variable = variable
-  }
+    // the variable
+    var variable: T
+
+    init(_ variable: T)
 }
 
 // Here's an example test
 
 class ViewControllerTests: XCTestCase {
-  func testFooCalledOnViewDidLoad() {
-    // mocks
-    let sut = MockMyObject()
-    let viewController = ViewController()
-    viewController.myObject = sut
+    func testFooCalledOnViewDidLoad() {
+        // mocks
+        let sut = MockMyObject()
+        let viewController = ViewController()
+        viewController.myObject = sut
 
-    // sut
-    viewController.viewDidLoad()
+        // sut
+        viewController.viewDidLoad()
 
-    // test
-    XCTAssertTrue(sut.invocations.isInvoked(MockMyObject.foo1.name))
-  }
+        // test
+        XCTAssertTrue(sut.invocations.isInvoked(MockMyObject.foo1.name))
+    }
 }
 ```
 
