@@ -121,7 +121,7 @@ final class _Invocations {
         return history.filter {  $0.name == name.rawValue }.sorted { $0.date < $1.date }
     }
 
-    func reset() {
+    func clear() {
         history.removeAll()
     }
 }
