@@ -1,8 +1,8 @@
 import XCTest
 @testable import Example
 
-class ViewControllerTests: XCTestCase {
-	func testFooCalledOnViewDidLoad() {
+final class ViewControllerTests: XCTestCase {
+	func test_viewDidLoad_whenInvoked_expectFooInvoked() {
 		// mocks
 		let sut = MockMyObject()
 		let viewController = ViewController()
