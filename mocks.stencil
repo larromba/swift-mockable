@@ -89,9 +89,9 @@ protocol {% call helperClassPrefix %}StringRawRepresentable: RawRepresentable {
 
 struct {% call helperClassPrefix %}Variable<T> {
     let date = Date()
-    var variable: T
+    var variable: T?
 
-    init(_ variable: T) {
+    init(_ variable: T?) {
         self.variable = variable
     }
 }
@@ -178,7 +178,7 @@ final class {% call helperClassPrefix %}Invocations {
     }
 
     func count<T: {% call helperClassPrefix %}StringRawRepresentable>(_ name: T) -> Int {
-        return history.filter {  $0.name == name.rawValue }.count
+        return history.filter { $0.name == name.rawValue }.count
     }
 
     func all() -> [{% call helperClassPrefix %}Invocation] {
@@ -186,7 +186,7 @@ final class {% call helperClassPrefix %}Invocations {
     }
 
     func find<T: {% call helperClassPrefix %}StringRawRepresentable>(_ name: T) -> [{% call helperClassPrefix %}Invocation] {
-        return history.filter {  $0.name == name.rawValue }.sorted { $0.date < $1.date }
+        return history.filter { $0.name == name.rawValue }.sorted { $0.date < $1.date }
     }
 
     func clear() {
