@@ -21,9 +21,9 @@ protocol _StringRawRepresentable: RawRepresentable {
 
 struct _Variable<T> {
     let date = Date()
-    var variable: T
+    var variable: T?
 
-    init(_ variable: T) {
+    init(_ variable: T?) {
         self.variable = variable
     }
 }
@@ -110,7 +110,7 @@ final class _Invocations {
     }
 
     func count<T: _StringRawRepresentable>(_ name: T) -> Int {
-        return history.filter {  $0.name == name.rawValue }.count
+        return history.filter { $0.name == name.rawValue }.count
     }
 
     func all() -> [_Invocation] {
@@ -118,7 +118,7 @@ final class _Invocations {
     }
 
     func find<T: _StringRawRepresentable>(_ name: T) -> [_Invocation] {
-        return history.filter {  $0.name == name.rawValue }.sorted { $0.date < $1.date }
+        return history.filter { $0.name == name.rawValue }.sorted { $0.date < $1.date }
     }
 
     func clear() {
