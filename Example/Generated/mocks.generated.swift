@@ -1,8 +1,11 @@
-// Generated using Sourcery 0.15.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 0.18.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
 // swiftlint:disable line_length
 // swiftlint:disable variable_name
+
+// https://github.com/larromba/swift-mockable 
+// 1.0.0
 
 import Foundation
 #if os(iOS) || os(tvOS) || os(watchOS)

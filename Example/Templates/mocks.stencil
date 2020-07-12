@@ -1,6 +1,9 @@
 // swiftlint:disable line_length
 // swiftlint:disable variable_name
 
+// https://github.com/larromba/swift-mockable 
+// 1.0.0
+
 import Foundation
 #if os(iOS) || os(tvOS) || os(watchOS)
 import UIKit
@@ -39,7 +42,7 @@ import AppKit
         {% endfor %}
         {% call invocationsVariableName %}.record(invocation)
         {% if not method.returnTypeName.isVoid and not method.isInitializer %}
-        {% if method.annotations.returnValue %}
+        {% if method.annotations.returnValue or method.annotations.returnValue.description %}
         {% call actionsVariableName %}.set(defaultReturnValue: {{ method.annotations.returnValue }}, for: functionName)
         {% endif %}
         return {% call actionsVariableName %}.returnValue(for: functionName){% if method.isOptionalReturnType and method.unwrappedReturnTypeName != 'Any' %} as? {% elif method.isOptionalReturnType and method.unwrappedReturnTypeName == 'Any' %} as {% else %} as! {% endif %}{{ method.unwrappedReturnTypeName }}
@@ -64,7 +67,7 @@ import AppKit
         get { return {% call underlyingVariableName variable %} }
         set(value) { {% call underlyingVariableName variable %} = value; {% call underlyingVariableName variable %}History.append({% call helperClassPrefix %}Variable(value)) }
     }
-    {% if variable.annotations.value %}
+    {% if variable.annotations.value or variable.annotations.value.description %}
     var {% call underlyingVariableName variable %}: {% call mockVariableTypeName variable %} = {{ variable.annotations.value }}
     {% elif variable.type.based.Mockable and variable.type.annotations.name %}
     var {% call underlyingVariableName variable %}: {% call mockVariableTypeName variable %} = Mock{{ variable.type.annotations.name }}()

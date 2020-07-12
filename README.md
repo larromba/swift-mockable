@@ -248,6 +248,3 @@ Nothing yet. Please report any issues you may find!
 
 ## Credits
 This script has been adapted from `AutoMockable.stencil` by [Sourcery](https://github.com/krzysztofzablocki/Sourcery)
-
-## Future Work
-- update mockable stencil to remove invocation history?
