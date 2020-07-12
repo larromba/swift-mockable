@@ -54,7 +54,7 @@ protocol Mockable {} // Sourcery
 ### 5. Mock something
 Create a protocol, and implement `Mockable`. For example:
 
-```
+```swift
 // sourcery: name = MyObject, inherits = NSObject
 protocol MyObjectable: Mockable {
   // sourcery: value = false
@@ -84,7 +84,7 @@ You can now write your tests using your generated mocks
 
 Each Mock class has the following tools you can use whilst testing:
 
-```
+```swift
 let mock = MockMyObject()
 mock.invocations // monitors function invocations
 mock.actions // stores function actions
@@ -163,12 +163,21 @@ class ViewControllerTests: XCTestCase {
 
 To see tests in a real project, go [here](https://github.com/larromba/graffiti-backgrounds/)
 
+## Updating Stencil File
+
+*(only tested on Mac)*
+
+```
+mv swift-mockable-update-template.sh /usr/local/bin
+sh swift-mockable-update-template PATH_TO_TEMPLATE_FILE
+```
+
 ## Modifying Code Generation
 To edit code generation, you can add annotations to protocols inheriting from `Mockable` in the form of `// sourcery: ...` comments.
 
 #### protocol definitions
 
-```
+```swift
     // sourcery: name = Object
     // sourcery: inherits = "NSObject, MyObject"
     // sourcery: init = coder
@@ -184,14 +193,14 @@ To edit code generation, you can add annotations to protocols inheriting from `M
 
 	*init = coder*
 
-```
+```swift
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 ```
 * **associatedtype**: associatedtypes are [not yet supported](https://github.com/krzysztofzablocki/Sourcery/issues/539) by Sourcery out of the box, so you must mark them as an annotation, e,g. `associatedtype = MyType` would become:
 
-```
+```swift
     class MockObject: Objectable {
         typealias MyType = Any
     }
@@ -199,7 +208,7 @@ To edit code generation, you can add annotations to protocols inheriting from `M
 
 #### protocol variables
 
-```
+```swift
     protocol Objectable: Mockable {
         // sourcery: value = 2
         var myVariable: Int { get }
@@ -210,7 +219,7 @@ To edit code generation, you can add annotations to protocols inheriting from `M
 
 #### protocol functions
 
-```
+```swift
     protocol Objectable: Mockable {
         // sourcery: returnValue = true
         func foo() -> Bool
